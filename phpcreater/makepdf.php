@@ -9,7 +9,9 @@ $pdf = new tFPDF;
 //AddFontのttfファイルを読み込むと接続できる
 $pdf->AddFont('ShipporiMincho','','ShipporiMincho-Regular.ttf',true);
 
-$names = explode(",", $_GET['names']);
+$names = htmlentities($_GET['names'],ENT_QUOTES, "utf-8");
+$names = explode("\r\n",$names);
+
 foreach($names as $name){
     $pdf->SetFont('ShipporiMincho','',20);
     $pdf->AddPage();
@@ -31,7 +33,8 @@ $pdf->Output();
 function make_contents(){
         global $pdf;
 
-        $contents = explode(",",$_GET['contents']);
+        $contents = htmlentities($_GET['contents'],ENT_QUOTES,"utf-8"); //GETはそのまま使用するとセキュリティ上問題あるのでhtmlentitiesを使用する
+        $contents = explode("\r\n",$contents);//"\r\n"は改行するだけで内容が改行される
         $count = 0;
 
 
